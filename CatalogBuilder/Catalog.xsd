@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+
+  <xs:complexType name="ImportMetaClass">
+    <xs:sequence>
+      <xs:element name="Namespace" type="xs:string" minOccurs="0" />
+      <xs:element name="Name" type="xs:string" minOccurs="0" />
+      <xs:element name="FriendlyName" type="xs:string" minOccurs="0" />
+      <xs:element name="MetaClassType" type="xs:string" minOccurs="0" />
+      <xs:element name="ParentClass" type="xs:string" minOccurs="0" />
+      <xs:element name="TableName" type="xs:string" minOccurs="0" />
+      <xs:element name="Description" type="xs:string" minOccurs="0" />
+      <xs:element name="IsSystem" type="xs:string" minOccurs="0" />
+      <xs:element name="IsAbstract" type="xs:string" minOccurs="0" />
+      <xs:element name="FieldListChangedSqlScript" type="xs:string" minOccurs="0" />
+      <xs:element name="Tag" type="xs:string" minOccurs="0" />
+      <xs:element name="Attributes" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="ImportMetaField">
+    <xs:sequence>
+      <xs:element name="Namespace" type="xs:string" minOccurs="0" />
+      <xs:element name="Name" type="xs:string" minOccurs="0" />
+      <xs:element name="FriendlyName" type="xs:string" minOccurs="0" />
+      <xs:element name="Description" type="xs:string" minOccurs="0" />
+      <xs:element name="DataType" type="xs:string" minOccurs="0" />
+      <xs:element name="Length" type="xs:string" minOccurs="0" />
+      <xs:element name="AllowNulls" type="xs:string" minOccurs="0" />
+      <xs:element name="SaveHistory" type="xs:string" minOccurs="0" />
+      <xs:element name="AllowSearch" type="xs:string" minOccurs="0" />
+      <xs:element name="MultiLanguageValue" type="xs:string" minOccurs="0" />
+      <xs:element name="IsSystem" type="xs:string" minOccurs="0" />
+      <xs:element name="Tag" type="xs:string" minOccurs="0" />
+      <xs:element name="Type" type="xs:string" minOccurs="0" />
+      <xs:element name="FileData" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DiskFileName" type="xs:string" minOccurs="0" />
+            <xs:element name="ContentType" type="xs:string" minOccurs="0" />
+            <xs:element name="Name" type="xs:string" minOccurs="0" />
+            <xs:element name="CreationTime" type="xs:string" minOccurs="0" />
+          </xs:sequence>
+          <xs:attribute name="language" type="xs:string" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Attributes" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Attribute" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Key" type="xs:string" minOccurs="0" />
+                  <xs:element name="Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="OwnerMetaClass" nillable="true" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+      <xs:element name="Dictionary" nillable="true" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+      <xs:element name="Data" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Item" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="key" type="xs:string" />
+                <xs:attribute name="value" type="xs:string" />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="language" type="xs:string" />
+          <xs:attribute name="value" type="xs:string" />
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="MetaData">
+    <xs:sequence>
+      <xs:element name="MetaClass" type="ImportMetaClass" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="MetaFields" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MetaField" type="ImportMetaField" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="SeoInfo">
+    <xs:sequence>
+      <xs:element name="Seo" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LanguageCode" type="xs:string" minOccurs="0" />
+            <xs:element name="Uri" type="xs:string" minOccurs="0" />
+            <xs:element name="Title" type="xs:string" minOccurs="0" />
+            <xs:element name="Description" type="xs:string" minOccurs="0" />
+            <xs:element name="Keywords" type="xs:string" minOccurs="0" />
+            <xs:element name="UriSegment" type="xs:string" minOccurs="0" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="Catalogs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MetaDataScheme" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MetaDataPlusBackup" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="MetaClass" type="ImportMetaClass" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="MetaField" type="ImportMetaField" minOccurs="0" maxOccurs="unbounded" />
+                  </xs:sequence>
+                  <xs:attribute name="version" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Dictionaries" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Merchants" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Merchant" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Name" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Packages" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Package" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="Description" type="xs:string" minOccurs="0" />
+                          <xs:element name="Width" type="xs:string" minOccurs="0" />
+                          <xs:element name="Length" type="xs:string" minOccurs="0" />
+                          <xs:element name="Height" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="TaxCategories" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="TaxCategory" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Name" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warehouses" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Warehouse" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="IsActive" type="xs:string" minOccurs="0" />
+                          <xs:element name="IsPrimary" type="xs:string" minOccurs="0" />
+                          <xs:element name="SortOrder" type="xs:string" minOccurs="0" />
+                          <xs:element name="Code" type="xs:string" minOccurs="0" />
+                          <xs:element name="IsFulfillmentCenter" type="xs:string" minOccurs="0" />
+                          <xs:element name="IsPickupLocation" type="xs:string" minOccurs="0" />
+                          <xs:element name="IsDeliveryLocation" type="xs:string" minOccurs="0" />
+                          <xs:element name="FirstName" type="xs:string" minOccurs="0" />
+                          <xs:element name="LastName" type="xs:string" minOccurs="0" />
+                          <xs:element name="Organization" type="xs:string" minOccurs="0" />
+                          <xs:element name="Line1" type="xs:string" minOccurs="0" />
+                          <xs:element name="Line2" type="xs:string" minOccurs="0" />
+                          <xs:element name="City" type="xs:string" minOccurs="0" />
+                          <xs:element name="State" type="xs:string" minOccurs="0" />
+                          <xs:element name="CountryCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="CountryName" type="xs:string" minOccurs="0" />
+                          <xs:element name="PostalCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="RegionCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="RegionName" type="xs:string" minOccurs="0" />
+                          <xs:element name="DaytimePhoneNumber" type="xs:string" minOccurs="0" />
+                          <xs:element name="EveningPhoneNumber" type="xs:string" minOccurs="0" />
+                          <xs:element name="FaxNumber" type="xs:string" minOccurs="0" />
+                          <xs:element name="Email" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="AssociationTypes" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="AssociationType" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="TypeId" type="xs:string" minOccurs="0" />
+                          <xs:element name="Description" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Markets" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Market" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="MarketId" type="xs:string" minOccurs="0" />
+                          <xs:element name="IsEnabled" type="xs:string" minOccurs="0" />
+                          <xs:element name="MarketName" type="xs:string" minOccurs="0" />
+                          <xs:element name="MarketDescription" type="xs:string" minOccurs="0" />
+                          <xs:element name="DefaultLanguage" type="xs:string" minOccurs="0" />
+                          <xs:element name="DefaultCurrency" type="xs:string" minOccurs="0" />
+                          <xs:element name="Currencies" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Currency" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Languages" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Language" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Countries" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Country" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Catalog" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Guid" type="xs:string" minOccurs="0" />
+              <xs:element name="Languages" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Language" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="LanguageCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="UriSegment" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Nodes" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Node" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="StartDate" type="xs:string" minOccurs="0" />
+                          <xs:element name="EndDate" type="xs:string" minOccurs="0" />
+                          <xs:element name="IsActive" type="xs:string" minOccurs="0" />
+                          <xs:element name="SortOrder" type="xs:string" minOccurs="0" />
+                          <xs:element name="DisplayTemplate" type="xs:string" minOccurs="0" />
+                          <xs:element name="Code" type="xs:string" minOccurs="0" />
+                          <xs:element name="Guid" type="xs:string" minOccurs="0" />
+                          <xs:element name="MetaData" type="MetaData" minOccurs="0" />
+                          <xs:element name="ParentNode" type="xs:string" minOccurs="0" />
+                          <xs:element name="SeoInfo" type="SeoInfo" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="totalCount" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Entries" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Entry" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="StartDate" type="xs:string" minOccurs="0" />
+                          <xs:element name="EndDate" type="xs:string" minOccurs="0" />
+                          <xs:element name="IsActive" type="xs:string" minOccurs="0" />
+                          <xs:element name="DisplayTemplate" type="xs:string" minOccurs="0" />
+                          <xs:element name="Code" type="xs:string" minOccurs="0" />
+                          <xs:element name="EntryType" type="xs:string" minOccurs="0" />
+                          <xs:element name="Guid" type="xs:string" minOccurs="0" />
+                          <xs:element name="MetaData" type="MetaData" minOccurs="0" />
+                          <xs:element name="VariationInfo" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Variation" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="MaxQuantity" type="xs:string" minOccurs="0" />
+                                      <xs:element name="MinQuantity" type="xs:string" minOccurs="0" />
+                                      <xs:element name="TrackInventory" type="xs:string" minOccurs="0" />
+                                      <xs:element name="Weight" type="xs:string" minOccurs="0" />
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="WarehouseInventories" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="WarehouseInventory" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="WarehouseCode" type="xs:string" minOccurs="0" />
+                                      <xs:element name="AllowBackorder" type="xs:string" minOccurs="0" />
+                                      <xs:element name="AllowPreorder" type="xs:string" minOccurs="0" />
+                                      <xs:element name="BackorderAvailabilityDate" type="xs:string" minOccurs="0" />
+                                      <xs:element name="BackorderQuantity" type="xs:string" minOccurs="0" />
+                                      <xs:element name="InStockQuantity" type="xs:string" minOccurs="0" />
+                                      <xs:element name="InventoryStatus" type="xs:string" minOccurs="0" />
+                                      <xs:element name="PreorderAvailabilityDate" type="xs:string" minOccurs="0" />
+                                      <xs:element name="PreorderQuantity" type="xs:string" minOccurs="0" />
+                                      <xs:element name="ReorderMinQuantity" type="xs:string" minOccurs="0" />
+                                      <xs:element name="ReservedQuantity" type="xs:string" minOccurs="0" />
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Prices" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Price" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="MarketId" type="xs:string" minOccurs="0" />
+                                      <xs:element name="CurrencyCode" type="xs:string" minOccurs="0" />
+                                      <xs:element name="PriceTypeId" type="xs:string" minOccurs="0" />
+                                      <xs:element name="PriceCode" type="xs:string" minOccurs="0" />
+                                      <xs:element name="ValidFrom" type="xs:string" minOccurs="0" />
+                                      <xs:element name="ValidUntil" type="xs:string" minOccurs="0" />
+                                      <xs:element name="MinQuantity" type="xs:string" minOccurs="0" />
+                                      <xs:element name="UnitPrice" type="xs:string" minOccurs="0" />
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="SeoInfo" type="SeoInfo" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="totalCount" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Relations" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="NodeEntryRelation" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="EntryCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="NodeCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="SortOrder" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="EntryRelation" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ParentEntryCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="ChildEntryCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="RelationType" type="xs:string" minOccurs="0" />
+                          <xs:element name="Quantity" type="xs:string" minOccurs="0" />
+                          <xs:element name="GroupName" type="xs:string" minOccurs="0" />
+                          <xs:element name="SortOrder" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="NodeRelation" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ChildNodeCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="ParentNodeCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="SortOrder" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Associations" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="CatalogAssociation" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="Description" type="xs:string" minOccurs="0" />
+                          <xs:element name="SortOrder" type="xs:string" minOccurs="0" />
+                          <xs:element name="EntryCode" type="xs:string" minOccurs="0" />
+                          <xs:element name="Association" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="EntryCode" type="xs:string" minOccurs="0" />
+                                <xs:element name="SortOrder" type="xs:string" minOccurs="0" />
+                                <xs:element name="Type" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="CatalogItemAssetCollection" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="CatalogItemAssets" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="CatalogItemAsset" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="CatalogItemType" type="xs:string" minOccurs="0" />
+                                <xs:element name="CatalogItemCode" type="xs:string" minOccurs="0" />
+                                <xs:element name="AssetPath" type="xs:string" minOccurs="0" />
+                                <xs:element name="AssetName" type="xs:string" minOccurs="0" />
+                                <xs:element name="AssetType" type="xs:string" minOccurs="0" />
+                                <xs:element name="MimeType" type="xs:string" minOccurs="0" />
+                                <xs:element name="GroupName" type="xs:string" minOccurs="0" />
+                                <xs:element name="SortOrder" type="xs:integer" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="TotalCount" type="xs:integer" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" />
+            <xs:attribute name="lastmodified" type="xs:string" />
+            <xs:attribute name="startDate" type="xs:string" />
+            <xs:attribute name="endDate" type="xs:string" />
+            <xs:attribute name="defaultCurrency" type="xs:string" />
+            <xs:attribute name="weightBase" type="xs:string" />
+            <xs:attribute name="lengthBase" type="xs:string" />
+            <xs:attribute name="defaultLanguage" type="xs:string" />
+            <xs:attribute name="sortOrder" type="xs:string" />
+            <xs:attribute name="isActive" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="Version" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
