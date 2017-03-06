@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace CatalogBuilder
@@ -8,26 +9,26 @@ namespace CatalogBuilder
     {
         public XElement XCatalog { get; }
 
-        public CatalogBuilder()
+        public CatalogBuilder(BuildContext context)
         {
+            var xCatalogLanguages = context.CatalogLanguages.Select(x=>
+                new XElement("Language",
+                    new XElement("LanguageCode", x),
+                    new XElement("UriSegment", context.CatalogName)));
             XCatalog =
                 new XElement("Catalog",
-                    new XAttribute("name", "name"),
+                    new XAttribute("name", context.CatalogName),
                     new XAttribute("lastmodified", "2012-04-05 22:07:31Z"),
-                    new XAttribute("startDate", "2012-01-16 05:51:00Z"),
-                    new XAttribute("endDate", "2022-01-16 05:51:00Z"),
-                    new XAttribute("defaultCurrency", "usd"),
-                    new XAttribute("weightBase", "weightBase"),
-                    new XAttribute("lengthBase", "lengthBase"),
-                    new XAttribute("defaultLanguage", "en"),
-                    new XAttribute("sortOrder", "1"),
+                    new XAttribute("startDate", context.CatalogStartDate),
+                    new XAttribute("endDate", context.CatalogEndDate),
+                    new XAttribute("defaultCurrency", context.CatalogCurrency),
+                    new XAttribute("weightBase", "lbs"),
+                    new XAttribute("lengthBase", "in"),
+                    new XAttribute("defaultLanguage", context.DefaultCatalogLanguage),
+                    new XAttribute("sortOrder", 0),
                     new XAttribute("isActive", "true"),
-                    new XAttribute("languages", "sv,fr"),
                     new XElement("Guid", Guid.NewGuid()),
-                    new XElement("Languages",
-                        new XElement("Language",
-                        new XElement("LanguageCode", "en"),
-                        new XElement("UriSegment", "UriSegment"))),
+                    new XElement("Languages", xCatalogLanguages),
                     new XElement("Nodes"),
                     new XElement("Entries"),
                     new XElement("Relations"),

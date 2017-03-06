@@ -1,48 +1,59 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
 namespace CatalogBuilder
 {
-    class AssociationsBuilder
+    static class AssociationsBuilder
     {
-        public IEnumerable<XElement> CreateAssociations(BuildContext context)
+        private static readonly Random _random = new Random();
+
+        public static IEnumerable<XElement> CreateAssociations(BuildContext context)
         {
-            var counter = 0;
             var xCatalogAssociations = new List<XElement>();
 
-            for (var i = 0; i < context.EntryIds.Count; i++)
+            var entryCodes = context.Entries.EntryIds.ToArray();
+            foreach (var currentCode in entryCodes)
             {
-                var codes = context.EntryIds.Skip(i * context.NrAssociationsPerEntry).Take(context.NrAssociationsPerEntry).ToList();
-                if (codes.Count < context.NrAssociationsPerEntry)
-                {
-                    continue;
-                }
+                var associatedCodes = PickRandomAssociations(entryCodes, currentCode, context.Entries.AssociationsPerEntryCount);
 
-                var xAssociations = new List<XElement>();
-                for (int j = 1; j < context.NrAssociationsPerEntry; j++)
-                {
-                    xAssociations.Add(
-                        new XElement("Association",
-                            new XElement("EntryCode", codes[j]),
-                            new XElement("SortOrder", "1"),
-                            new XElement("Type", "Type")));
-                }
+                var xAssociations = associatedCodes.Select(x => 
+                    new XElement("Association", 
+                        new XElement("EntryCode", x), 
+                        new XElement("SortOrder", 0), 
+                        new XElement("Type", context.Dictionaries.AssociationTypes.First())));
 
                 var xCatalogAssociation =
-                     new XElement("CatalogAssociation",
-                        new XElement("Name", "CatalogAssociationName" + counter),
+                    new XElement("CatalogAssociation",
+                        new XElement("Name", "CrossSell"),
                         new XElement("Description", "Description"),
-                        new XElement("SortOrder", "1"),
-                        new XElement("EntryCode", codes[0]),
+                        new XElement("SortOrder", 0),
+                        new XElement("EntryCode", currentCode),
                         xAssociations);
 
                 xCatalogAssociations.Add(xCatalogAssociation);
-                counter++;
-
             }
-          
+
             return xCatalogAssociations;
+        }
+
+        private static IEnumerable<string> PickRandomAssociations(string[] entryCodes, string codeToExclude, int numberOfAssociations)
+        {
+            var associatedCodes = new List<string>();
+
+            for (var i = 0; i < numberOfAssociations; i++)
+            {
+                string associationCode;
+                do
+                {
+                    associationCode = entryCodes[_random.Next(entryCodes.Length)];
+
+                } while (codeToExclude == associationCode);
+                associatedCodes.Add(associationCode);
+            }
+
+            return associatedCodes.Distinct();
         }
     }
 }

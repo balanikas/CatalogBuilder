@@ -1,86 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace CatalogBuilder
 {
-    class NodesBuilder
+    static class NodesBuilder
     {
-        public XElement XNodes { get; }
-        public NodesBuilder()
+        public static IEnumerable<XElement>  CreateNodes(TreeNode node, string parentId, BuildContext context)
         {
-            XNodes = new XElement("Nodes");
-        }
-
-        public IEnumerable<XElement> CreateNodes(BuildContext context )
-        {
-            var xNodes = new List<XElement>();
-            for (var i = 0; i < context.NrParentNodes; i++)
+            var list = new List<XElement>();
+            if (!node.Config.IsRoot)
             {
-                xNodes.Add(CreateParentNode(i));
-
-                context.NodeRelations["nodecode" + i] = new List<string>();
-                for (var j = 0; j < context.NrChildrenPerParentNode; j++)
-                {
-                    xNodes.Add(CreateChildNode(j, "nodecode" + i));
-                   
-                    context.NodeRelations["nodecode" + i].Add("childnodecode" + j);
-                }
+                list.Add(CreateNode(node, parentId, context));
+            }
+           
+            foreach (var child in node)
+            {
+                list.AddRange( CreateNodes(child, node.Id, context)); 
             }
 
-            return xNodes;
+            return list;
         }
-        
-        private XElement CreateParentNode(int id)
+
+        private static XElement CreateNode(TreeNode node, string parentId, BuildContext context)
         {
-            return new XElement("Node",
-                new XElement("Name", "nodename" + id),
-                new XElement("StartDate", "2010-09-01 07:00:00Z"),
-                new XElement("EndDate", "2020-10-01 07:00:00Z"),
-                new XElement("IsActive", "true"),
-                new XElement("SortOrder", id),
-                new XElement("DisplayTemplate", "DisplayTemplate"),
-                new XElement("Code", "nodecode" + id),
-                new XElement("Guid", Guid.NewGuid()),
-                new XElement("ParentNode"),
+            return
+               new XElement("Node",
+                   new XElement("Name", node.Id),
+                   new XElement("StartDate", context.CatalogStartDate),
+                   new XElement("EndDate", context.CatalogEndDate),
+                   new XElement("IsActive", "true"),
+                   new XElement("SortOrder", 0),
+                   new XElement("DisplayTemplate", "DisplayTemplate"),
+                   new XElement("Code", node.Id),
+                   new XElement("Guid", Guid.NewGuid()),
+                   CreateMetaData(context),
+                   new XElement("ParentNode", parentId),
+                   CreateNodeSeoInfo(node.Id, context));
+        }
+
+        private static XElement CreateMetaData(BuildContext context)
+        {
+            var xMetaFields = context.MetaData.MetaFields[MetaDataScheme.CatalogNodeMetaField].Select(x => 
+                new XElement("MetaField",
+                    new XElement("Name", (string)x.Element("Name")),
+                    new XElement("Type", (string)x.Element("DataType")),
+                    context.CatalogLanguages.Select(y => 
+                        new XElement("Data", 
+                            new XAttribute("language", y),
+                            new XAttribute("value", (string)x.Element("Name") + "-value-" + y)))));
+            
+            return
                 new XElement("MetaData",
                     new XElement("MetaClass",
-                        new XElement("Name", "CatalogNodeEx")),
-                    new XElement("MetaFields")),
-                    CreateNodeSeoInfo("nodename" + id, "en"));
+                        new XElement("Name", MetaDataScheme.CatalogNodeMetaClass)),
+                    new XElement("MetaFields",
+                        xMetaFields));
         }
 
-        private XElement CreateChildNode(int id, string parentId)
+        private static XElement CreateNodeSeoInfo(string uri, BuildContext context)
         {
-            return 
-                new XElement("Node",
-                    new XElement("Name", "childnodename" + id),
-                    new XElement("StartDate", "2010-09-01 07:00:00Z"),
-                    new XElement("EndDate", "2020-10-01 07:00:00Z"),
-                    new XElement("IsActive", "true"),
-                    new XElement("SortOrder", id),
-                    new XElement("DisplayTemplate", "DisplayTemplate"),
-                    new XElement("Code", "childnodecode" + id),
-                    new XElement("Guid", Guid.NewGuid()),
-                    new XElement("ParentNode", parentId),
-                    new XElement("MetaData",
-                        new XElement("MetaClass",
-                            new XElement("Name", "CatalogNodeEx")),
-                        new XElement("MetaFields")),
-                    CreateNodeSeoInfo("childnodename" + id, "en"));
-        }
-
-        private XElement CreateNodeSeoInfo(string uri, string languageCode)
-        {
-            return 
-                new XElement("SeoInfo", 
-                    new XElement("Seo", 
-                        new XElement("LanguageCode", languageCode),
-                        new XElement("Uri", uri + "-" + languageCode + ".aspx"),
-                        new XElement("Title", "title"),
-                        new XElement("Description", "description"),
-                        new XElement("Keywords", "key,words"),
-                        new XElement("UriSegment", uri)));
+            return
+                new XElement("SeoInfo", context.CatalogLanguages.Select(x =>
+                    new XElement("Seo",
+                        new XElement("LanguageCode", x),
+                        new XElement("Uri", uri),
+                        new XElement("Title"),
+                        new XElement("Description"),
+                        new XElement("Keywords"),
+                        new XElement("UriSegment", uri))));
         }
     }
 }

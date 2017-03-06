@@ -5,37 +5,45 @@ namespace CatalogBuilder
 {
     class DictionariesBuilder
     {
-        public IEnumerable<XElement> CreatePackages(int packages, BuildContext context) 
+        private readonly BuildContext.DictionariesBuildContext _ctx;
+
+        public DictionariesBuilder(BuildContext.DictionariesBuildContext ctx)
+        {
+            _ctx = ctx;
+        }
+
+        public IEnumerable<XElement> CreatePackages() 
         {
             var xPackages = new List<XElement>();
-            for (int i = 0; i < packages; i++)
+            for (int i = 0; i < _ctx.PackagesCount; i++)
             {
                 xPackages.Add(
                     new XElement("Package",
                         new XElement("Name", "packagename" + i),
                         new XElement("Description", "description"),
-                        new XElement("Width", "1"),
-                        new XElement("Height", "1"),
-                        new XElement("Length", "1")));
+                        new XElement("Width", 1),
+                        new XElement("Height", 1),
+                        new XElement("Length", 1)));
 
-                context.PackageIds.Add("packagename" + i);
+                _ctx.PackageIds.Add("packagename" + i);
             }
 
             return xPackages;
         }
 
-        public IEnumerable<XElement> CreateWarehouses(int warehouses, BuildContext context) 
+        public IEnumerable<XElement> CreateWarehouses() 
         {
             var xPackages = new List<XElement>();
-            for (var i = 0; i < warehouses; i++)
+            for (var i = 0; i < _ctx.WarehousesCount; i++)
             {
+                var warehouseId = "warehouse" + i;
                 xPackages.Add(
                     new XElement("Warehouse",
-                        new XElement("Name", "warehousename" + i),
+                        new XElement("Name", warehouseId),
                         new XElement("IsActive", "true"),
                         new XElement("IsPrimary", "true"),
-                        new XElement("SortOrder", "1"),
-                        new XElement("Code", "warehousecode" + i),
+                        new XElement("SortOrder", 1),
+                        new XElement("Code", warehouseId),
                         new XElement("FirstName", "FirstName"),
                         new XElement("LastName", "LastName"),
                         new XElement("Organization", "Organization"),
@@ -48,55 +56,55 @@ namespace CatalogBuilder
                         new XElement("PostalCode", "PostalCode"),
                         new XElement("RegionCode", "RegionCode"),
                         new XElement("RegionName", "RegionName"),
-                        new XElement("DaytimePhoneNumber", "DaytimePhoneNumber"),
-                        new XElement("EveningPhoneNumber", "EveningPhoneNumber"),
-                        new XElement("FaxNumber", "FaxNumber"),
-                        new XElement("Email", "Email")));
+                        new XElement("DaytimePhoneNumber", "1234"),
+                        new XElement("EveningPhoneNumber", "5678"),
+                        new XElement("FaxNumber", "0000"),
+                        new XElement("Email", "Email@company.com")));
 
-                context.WarehouseIds.Add("warehousecode" + i);
+                _ctx.WarehouseIds.Add(warehouseId);
             }
 
             return xPackages;
         }
 
-
-        public IEnumerable<XElement> CreateTaxCategories(int count, BuildContext context)
+        public IEnumerable<XElement> CreateTaxCategories()
         {
             var xList = new List<XElement>();
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < _ctx.TaxCategoriesCount; i++)
             {
                 xList.Add(
                     new XElement("TaxCategory",
-                        new XElement("Name", "taxcategoryname" + i)));
+                        new XElement("Name", "taxcategory" + i)));
             }
 
             return xList;
         }
 
-        public IEnumerable<XElement> CreateMerchants(int count, BuildContext context)
+        public IEnumerable<XElement> CreateMerchants()
         {
             var xList = new List<XElement>();
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < _ctx.MarketsCount; i++)
             {
                 xList.Add(
                     new XElement("Merchant",
-                        new XElement("Name", "merchantname" + i)));
+                        new XElement("Name", "merchant" + i)));
             }
 
             return xList;
         }
 
-        public IEnumerable<XElement> CreateMarkets(int count, BuildContext context)
+        public IEnumerable<XElement> CreateMarkets()
         {
             var xList = new List<XElement>();
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < _ctx.MarketsCount; i++)
             {
+                var marketId = "market" + i;
                 xList.Add(
                     new XElement("Market",
-                    new XElement("MarketId", "marketid"+ i),
-                    new XElement("IsEnabled", "true"),
-                    new XElement("MarketName", "marketname" + i),
-                    new XElement("MarketDescription", "MarketDescription"),
+                    new XElement("MarketId", marketId),
+                    new XElement("IsEnabled", "True"),
+                    new XElement("MarketName", marketId),
+                    new XElement("MarketDescription", marketId),
                     new XElement("DefaultLanguage", "en"),
                     new XElement("DefaultCurrency", "USD"),
                     new XElement("Currencies",
@@ -104,21 +112,27 @@ namespace CatalogBuilder
                     new XElement("Languages",
                         new XElement("Language", "en")),
                     new XElement("Countries",
-                        new XElement("Country", "Country"))));
+                        new XElement("Country", "USA"))));
+
+                _ctx.MarketIds.Add(marketId);
             }
 
             return xList;
         }
 
-        public IEnumerable<XElement> CreateAssociationTypes(int count, BuildContext context)
+        public IEnumerable<XElement> CreateAssociationTypes()
         {
             var xList = new List<XElement>();
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < _ctx.AssociationTypesCount; i++)
             {
+                var associationTypeId = "associationtype" + i;
                 xList.Add(
                      new XElement("AssociationType",
-                        new XElement("TypeId", "associationtype"+ i),
+                        new XElement("TypeId", associationTypeId),
                         new XElement("Description", "Description")));
+
+                _ctx.AssociationTypes.Add(associationTypeId);
+
             }
 
             return xList;
