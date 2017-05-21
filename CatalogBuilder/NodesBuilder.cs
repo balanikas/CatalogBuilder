@@ -9,6 +9,7 @@ namespace CatalogBuilder
     {
         public static IEnumerable<XElement>  CreateNodes(TreeNode node, string parentId, BuildContext context)
         {
+            node.Id = context.NodeNamingPattern + "-" + node.Id;
             var list = new List<XElement>();
             if (!node.Config.IsRoot)
             {
@@ -59,17 +60,17 @@ namespace CatalogBuilder
                         xMetaFields));
         }
 
-        private static XElement CreateNodeSeoInfo(string uri, BuildContext context)
+        private static XElement CreateNodeSeoInfo(string nodeid, BuildContext context)
         {
             return
                 new XElement("SeoInfo", context.CatalogLanguages.Select(x =>
                     new XElement("Seo",
                         new XElement("LanguageCode", x),
-                        new XElement("Uri", uri),
-                        new XElement("Title"),
-                        new XElement("Description"),
-                        new XElement("Keywords"),
-                        new XElement("UriSegment", uri))));
+                        new XElement("Uri", nodeid + "-uri"),
+                        new XElement("Title", nodeid + "-title"),
+                        new XElement("Description", nodeid + "-description"),
+                        new XElement("Keywords", nodeid + "-keywords"),
+                        new XElement("UriSegment", nodeid + "-urisegment"))));
         }
     }
 }

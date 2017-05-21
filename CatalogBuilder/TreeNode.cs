@@ -3,19 +3,21 @@ using System.Collections.Generic;
 
 namespace CatalogBuilder
 {
-    class TreeNode : IEnumerable<TreeNode>
+    public class TreeNode : IEnumerable<TreeNode>
     {
         private static int _nodeCounter;
+
+        public static string NodeNamingPattern = "node";
 
         private readonly Dictionary<string, TreeNode> _children =
             new Dictionary<string, TreeNode>();
 
-        public readonly string Id;
+        public string Id;
         public TreeNode Parent { get; private set; }
         
         public TreeNode(NodeConfiguration config)
         {
-            Id = "node" + _nodeCounter++;
+            Id = NodeNamingPattern + _nodeCounter++;
             Config = config;
         }
 

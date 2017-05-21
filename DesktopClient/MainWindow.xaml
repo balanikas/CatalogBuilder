@@ -1,0 +1,233 @@
+﻿<Window x:Class="DesktopClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopClient"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="CatalogBuilder" Height="800" Width="1400" MinHeight="800" MinWidth="1400">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+
+        <DockPanel LastChildFill="True" Margin="802,0,0,0">
+            <StatusBar x:Name="StatusBar"    DockPanel.Dock="Top" Height="30" >
+                <StatusBarItem >
+                    <Label Name="LblLoc" Content="{Binding StatusBar.LinesOfCode}" ContentStringFormat="lines: {0}"  />
+                </StatusBarItem>
+                <StatusBarItem >
+                    <Label Name="LblNodesCount" Content="{Binding StatusBar.NodesCount}" ContentStringFormat="nodes: {0}"   />
+                </StatusBarItem>
+                <StatusBarItem >
+                    <Label Name="LblProductsCount" Content="{Binding StatusBar.ProductsCount}" ContentStringFormat="products: {0}"    />
+                </StatusBarItem>
+                <StatusBarItem >
+                    <Label Name="LblVariationsCount" Content="{Binding StatusBar.VariationsCount}" ContentStringFormat="variations: {0}"   />
+                </StatusBarItem>
+
+            </StatusBar>
+            <avalonEdit:TextEditor
+                
+                xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                Name="TextEditor"
+                SyntaxHighlighting="XML"
+                ShowLineNumbers="True"
+                FontFamily="Consolas"
+                FontSize="10pt"   />
+
+        </DockPanel>
+
+        <Button x:Name="BtnDragSource"
+            PreviewMouseLeftButtonDown="BtnDragSource_PreviewMouseLeftButtonDown"
+            MouseMove="BtnDragSource_MouseMove"
+            IsEnabled="false"
+            Content="" HorizontalAlignment="Left" Margin="128,673,0,0" VerticalAlignment="Top" Width="669" Height="87"/>
+        <TabControl x:Name="TabControl" HorizontalAlignment="Left" Height="648" Margin="10,10,0,0" VerticalAlignment="Top" Width="787" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Create new">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="107*"/>
+                        <ColumnDefinition Width="580*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <GroupBox Header="Dictionaries properties" HorizontalAlignment="Left" Height="190" Margin="13,10,0,0" VerticalAlignment="Top" Width="226" Grid.ColumnSpan="2">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="35*"/>
+                                <ColumnDefinition Width="18*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Content="association types" Grid.Row="0"/>
+                            <Label Grid.Column="0" Content="markets" Grid.Row="1"/>
+                            <Label Grid.Column="0" Content="packages" Grid.Row="2"/>
+                            <Label Grid.Column="0" Content="warehouses" Grid.Row="3"/>
+                            <Label Grid.Column="0" Content="tax categories" Grid.Row="4"/>
+                            <Label Grid.Column="0" Content="merchants" Grid.Row="5"/>
+
+                            <xctk:IntegerUpDown x:Name="NumAssociationTypes"  Value="1" Grid.Column="1" Grid.Row="0" AllowTextInput="False" Minimum="0" Maximum="1000"/>
+                            <xctk:IntegerUpDown x:Name="NumMarkets"  Value="1" Grid.Column="1" Grid.Row="1" AllowTextInput="False" Minimum="0" Maximum="1000"/>
+                            <xctk:IntegerUpDown x:Name="NumPackages"  Value="1" Grid.Column="1" Grid.Row="2" AllowTextInput="False" Minimum="0" Maximum="1000"/>
+                            <xctk:IntegerUpDown x:Name="NumWarehouses"  Value="1" Grid.Column="1" Grid.Row="3" AllowTextInput="False" Minimum="0" Maximum="1000"/>
+                            <xctk:IntegerUpDown x:Name="NumTaxCategories"  Value="1" Grid.Column="1" Grid.Row="4" AllowTextInput="False" Minimum="0" Maximum="1000"/>
+                            <xctk:IntegerUpDown x:Name="NumMerchants"  Value="1" Grid.Column="1" Grid.Row="5" AllowTextInput="False" Minimum="0" Maximum="1000"/>
+
+
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="Catalog properties" HorizontalAlignment="Left" Height="250" Margin="122,10,0,0" VerticalAlignment="Top" Width="247" Grid.Column="1">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Content="name" Grid.Row="0"/>
+                            <Label Grid.Column="0" Content="default language" Grid.Row="1"/>
+                            <Label Grid.Column="0" Content="currency" Grid.Row="2"/>
+                            <Label Grid.Column="0" Content="country" Grid.Row="3"/>
+                            <Label Grid.Column="0" Content="metafields per node" Grid.Row="4"/>
+                            <Label Grid.Column="0"  Content="languages" Grid.Row="5"/>
+                            <Label Grid.Column="0" Content="start date" Grid.Row="6" />
+                            <Label Grid.Column="0" Content="end date" Grid.Row="7" />
+
+                            <xctk:WatermarkTextBox Watermark="my catalog" x:Name="TxtCatalogName" Grid.Column="1" Grid.Row="0" TextChanged="TxtCatalogName_TextChanged" />
+                            <xctk:WatermarkTextBox Watermark="en" x:Name="TxtCatalogDefaultLanguage" Grid.Column="1" Grid.Row="1" />
+                            <xctk:WatermarkTextBox Watermark="USD" x:Name="TxtCatalogCurrency" Grid.Column="1" Grid.Row="2" />
+                            <xctk:WatermarkTextBox Watermark="USA" x:Name="TxtCatalogCountry" Grid.Column="1" Grid.Row="3" />
+                            <xctk:IntegerUpDown Grid.Column="1" x:Name="NumMetaFieldCountPerNode"  Value="1" Grid.Row="4" AllowTextInput="False" Minimum="0" Maximum="1000"   />
+
+                            <xctk:CheckComboBox x:Name="CmbCatalogLanguages" Grid.Column="1" Grid.Row="5" />
+                            <DatePicker x:Name="DateCatalogStartDate" Grid.Row="6"  Grid.Column="1"/>
+                            <DatePicker x:Name="DateCatalogEndDate" Grid.Row="7"   Grid.Column="1"/>
+
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Entries properties" HorizontalAlignment="Left" Height="250" Margin="374,10,0,0" VerticalAlignment="Top" Width="275" Grid.Column="1">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="158*"/>
+                                <ColumnDefinition Width="115*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="metafields per variation" Grid.Row="7" />
+                            <Label Grid.Column="0" Content="metafields per product" Grid.Row="6"/>
+
+                            <Label Grid.Column="0" Content="preorder availability date" Grid.Row="5" />
+                            <Label Grid.Column="0" Content="backorder availability date" Grid.Row="4" />
+                            <Label Grid.Column="0" Content="price end date" Grid.Row="3"  />
+                            <Label Grid.Column="0" Content="price start date"  Grid.Row="2"/>
+                            <Label Grid.Column="0" Content="price" Grid.Row="1"  />
+                            <Label Grid.Column="0" Content="associations" Grid.Row="0"  />
+                            <xctk:IntegerUpDown Grid.Column="1" x:Name="NumAssociationsPerEntry"  Value="1" Grid.Row="0" AllowTextInput="False" Minimum="0" Maximum="1000" />
+                            <xctk:IntegerUpDown Grid.Column="1" x:Name="NumEntryPrice"  Value="1" Grid.Row="1" AllowTextInput="False" Minimum="0" Maximum="1000"  />
+                            <DatePicker x:Name="DateEntryPriceStartDate" Grid.Row="2"  Grid.Column="1"/>
+                            <DatePicker x:Name="DateEntryPriceEndDate" Grid.Row="3"   Grid.Column="1"/>
+                            <DatePicker x:Name="DateEntryBackorderAvailabilityDate" Grid.Row="4"   Grid.Column="1"/>
+                            <DatePicker x:Name="DateEntryPreorderAvailabilityDate" Grid.Row="5"  Grid.Column="1"/>
+                            <xctk:IntegerUpDown Grid.Column="1" x:Name="NumMetaFieldCountPerProduct"  Value="1" Grid.Row="6" AllowTextInput="False" Minimum="0" Maximum="1000"   />
+                            <xctk:IntegerUpDown Grid.Column="1" x:Name="NumMetaFieldCountPerVariation"  Value="1" Grid.Row="7" AllowTextInput="False" Minimum="0" Maximum="1000"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="Other" HorizontalAlignment="Left" Height="77" VerticalAlignment="Top" Width="226" Margin="13,208,0,0" Grid.ColumnSpan="2">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70*"/>
+                                <ColumnDefinition Width="41*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Content="node prefix" ></Label>
+                            <Label Grid.Column="0" Grid.Row="1" Content="entry prefix" ></Label>
+
+                            <TextBox x:Name="TxtNodeNamingPattern"  Grid.Column="1" Grid.Row="0"/>
+                            <TextBox x:Name="TxtEntryNamingPattern"  Grid.Column="1" Grid.Row="1"/>
+
+
+                        </Grid>
+                    </GroupBox>
+                    <Button x:Name="BtnCreateFromDefinition" Content=" Create xml " Click="BtnCreateFromDefinition_Click"   Margin="535,527,10,10" Grid.Column="1"   />
+                    <GroupBox Header="Catalog structure" HorizontalAlignment="Left" Height="308" Margin="13,302,0,0" VerticalAlignment="Top" Width="460" Grid.ColumnSpan="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="61*"/>
+                            </Grid.ColumnDefinitions>
+                            <TreeView x:Name="TreeCatalog"  HorizontalAlignment="Left" Height="188" Margin="0,33,0,0" VerticalAlignment="Top" Width="266" SelectedItemChanged="TreeCatalog_SelectedItemChanged" Grid.ColumnSpan="2" />
+
+                            <Grid x:Name="GrdStructureControls" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top" Width="177" IsEnabled="False" Margin="250,33,0,0" Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="41*"/>
+                                    <ColumnDefinition Width="18*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="products" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="0" Height="26" Width="112"/>
+                                <Label Grid.Column="0" Content="variations per product" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="1" Height="26" Width="127" Grid.ColumnSpan="2"/>
+                                <Label Grid.Column="0" Content="variations" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="2"  Height="26" Width="121"/>
+
+                                <xctk:IntegerUpDown x:Name="NumProductCount"  Grid.Column="1" Grid.Row="0" AllowTextInput="True" Minimum="0" Maximum="10000" ValueChanged="NumProductCount_ValueChanged" />
+                                <xctk:IntegerUpDown x:Name="NumVariationsPerProductCount"   Grid.Column="1" Grid.Row="1" AllowTextInput="True" Minimum="0" Maximum="10000" ValueChanged="NumVariationsPerProductCount_ValueChanged" />
+                                <xctk:IntegerUpDown x:Name="NumVariationCount"   Grid.Column="1" Grid.Row="2" AllowTextInput="True" Minimum="0" Maximum="10000" ValueChanged="NumVariationCount_ValueChanged" />
+                            </Grid>
+                            <ComboBox x:Name="CmbCatalogStructure" SelectionChanged="CmbCatalogStructure_SelectionChanged" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+
+                        </Grid>
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Edit existing">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="219*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnOpenExisting"  Content="Open existing catalog" HorizontalAlignment="Left" Margin="189,210,0,0" VerticalAlignment="Top" Width="253" Click="BtnOpenExisting_Click" Height="141" RenderTransformOrigin="0.658,0.75" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button Content=" Zip and save "  Click="DragSource_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,673,0,0" Width="113" Height="86"  />
+
+    </Grid>
+</Window>
+

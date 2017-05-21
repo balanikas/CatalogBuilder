@@ -31,7 +31,7 @@ namespace CatalogBuilder
 
             for (var i = 0; i < node.Config.ProductCount; i++)
             {
-                var productId = "product" + _productCounter;
+                var productId = context.EntryNamingPattern + "-product" + _productCounter;
 
                 xEntries.Add(CreateProduct(productId, context));
                 context.NodeEntryRelations[node.Id].Add(productId);
@@ -56,7 +56,7 @@ namespace CatalogBuilder
 
             for (var i = 0; i < node.Config.VariationCount; i++)
             {
-                var variationId = "variation" + _variationCounter;
+                var variationId = context.EntryNamingPattern + "-" + "variation" + _variationCounter;
 
                 xEntries.Add(CreateVariation(variationId, context));
                 context.NodeEntryRelations[node.Id].Add(variationId);
@@ -149,17 +149,17 @@ namespace CatalogBuilder
                         xMetaFields));
         }
 
-        private static XElement CreateEntrySeoInfo(string uri, BuildContext context)
+        private static XElement CreateEntrySeoInfo(string entryId, BuildContext context)
         {
             return
                 new XElement("SeoInfo", context.CatalogLanguages.Select(x =>
                     new XElement("Seo",
                         new XElement("LanguageCode", x),
-                        new XElement("Uri", uri),
-                        new XElement("Title"),
-                        new XElement("Description"),
-                        new XElement("Keywords"),
-                        new XElement("UriSegment", uri))));
+                        new XElement("Uri", entryId + "-uri"),
+                        new XElement("Title", entryId + "-title"),
+                        new XElement("Description", entryId + "-description"),
+                        new XElement("Keywords", entryId + "-keywords"),
+                        new XElement("UriSegment", entryId + "-urisegment"))));
         }
 
         private static XElement CreateVariationInfo()
