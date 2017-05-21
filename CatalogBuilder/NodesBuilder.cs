@@ -25,19 +25,21 @@ namespace CatalogBuilder
 
         private static XElement CreateNode(TreeNode node, string parentId, BuildContext context)
         {
+            var nodeId = context.NodeNamingPattern + "-" + node.Id;
+
             return
                new XElement("Node",
-                   new XElement("Name", node.Id),
+                   new XElement("Name", nodeId),
                    new XElement("StartDate", context.CatalogStartDate),
                    new XElement("EndDate", context.CatalogEndDate),
                    new XElement("IsActive", "true"),
                    new XElement("SortOrder", 0),
                    new XElement("DisplayTemplate", "DisplayTemplate"),
-                   new XElement("Code", node.Id),
+                   new XElement("Code", nodeId),
                    new XElement("Guid", Guid.NewGuid()),
                    CreateMetaData(context),
                    new XElement("ParentNode", parentId),
-                   CreateNodeSeoInfo(node.Id, context));
+                   CreateNodeSeoInfo(nodeId, context));
         }
 
         private static XElement CreateMetaData(BuildContext context)
@@ -59,17 +61,17 @@ namespace CatalogBuilder
                         xMetaFields));
         }
 
-        private static XElement CreateNodeSeoInfo(string uri, BuildContext context)
+        private static XElement CreateNodeSeoInfo(string nodeid, BuildContext context)
         {
             return
                 new XElement("SeoInfo", context.CatalogLanguages.Select(x =>
                     new XElement("Seo",
                         new XElement("LanguageCode", x),
-                        new XElement("Uri", uri),
-                        new XElement("Title"),
-                        new XElement("Description"),
-                        new XElement("Keywords"),
-                        new XElement("UriSegment", uri))));
+                        new XElement("Uri", nodeid + "-uri"),
+                        new XElement("Title", nodeid + "-title"),
+                        new XElement("Description", nodeid + "-description"),
+                        new XElement("Keywords", nodeid + "-keywords"),
+                        new XElement("UriSegment", nodeid + "-urisegment"))));
         }
     }
 }

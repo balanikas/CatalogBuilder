@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace CatalogBuilder
 {
-    class BuildContext
+    public class BuildContext
     {
         public string CatalogStartDate;
         public string CatalogEndDate;
@@ -22,6 +22,11 @@ namespace CatalogBuilder
 
         public TreeNode CatalogStructure { get; set; }
         public IEnumerable<string> CatalogLanguages { get; set; }
+        public int NodeMetaFieldCount { get; set; }
+        public int ProductMetaFieldCount { get; set; }
+        public int VariationMetaFieldCount { get; set; }
+        public string EntryNamingPattern { get; set; }
+        public string NodeNamingPattern { get; set; }
 
         public BuildContext()
         {
