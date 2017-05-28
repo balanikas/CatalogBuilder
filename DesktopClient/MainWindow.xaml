@@ -26,7 +26,27 @@
                 <StatusBarItem >
                     <Label Name="LblVariationsCount" Content="{Binding StatusBar.VariationsCount}" ContentStringFormat="variations: {0}"   />
                 </StatusBarItem>
-
+                <StatusBarItem >
+                    <Label Name="LblAssociationsCount" Content="{Binding StatusBar.AssociationsCount}" ContentStringFormat="associations: {0}"   />
+                </StatusBarItem>
+                <StatusBarItem >
+                    <Label Name="LblWarehousesCount" Content="{Binding StatusBar.WarehousesCount}" ContentStringFormat="warehouses: {0}"   />
+                </StatusBarItem>
+                <StatusBarItem >
+                    <Label Name="LblMarketsCount" Content="{Binding StatusBar.MarketsCount}" ContentStringFormat="markets: {0}"   />
+                </StatusBarItem>
+                <StatusBarItem >
+                    <Label Name="LblMerchantsCount" Content="{Binding StatusBar.MerchantsCount}" ContentStringFormat="merchants: {0}"   />
+                </StatusBarItem>
+                <StatusBarItem >
+                    <Label Name="LblAssociationTypesCount" Content="{Binding StatusBar.AssociationTypesCount}" ContentStringFormat="association types: {0}"   />
+                </StatusBarItem>
+                <StatusBarItem >
+                    <Label Name="LblPackagesCount" Content="{Binding StatusBar.PackagesCount}" ContentStringFormat="packages: {0}"   />
+                </StatusBarItem>
+                <StatusBarItem >
+                    <Label Name="LblTaxCategoriesCount" Content="{Binding StatusBar.TaxCategoriesCount}" ContentStringFormat="tax categories: {0}"   />
+                </StatusBarItem>
             </StatusBar>
             <avalonEdit:TextEditor
                 
@@ -205,9 +225,9 @@
                                 <Label Grid.Column="0" Content="variations per product" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="1" Height="26" Width="127" Grid.ColumnSpan="2"/>
                                 <Label Grid.Column="0" Content="variations" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="2"  Height="26" Width="121"/>
 
-                                <xctk:IntegerUpDown x:Name="NumProductCount"  Grid.Column="1" Grid.Row="0" AllowTextInput="True" Minimum="0" Maximum="10000" ValueChanged="NumProductCount_ValueChanged" />
-                                <xctk:IntegerUpDown x:Name="NumVariationsPerProductCount"   Grid.Column="1" Grid.Row="1" AllowTextInput="True" Minimum="0" Maximum="10000" ValueChanged="NumVariationsPerProductCount_ValueChanged" />
-                                <xctk:IntegerUpDown x:Name="NumVariationCount"   Grid.Column="1" Grid.Row="2" AllowTextInput="True" Minimum="0" Maximum="10000" ValueChanged="NumVariationCount_ValueChanged" />
+                                <xctk:IntegerUpDown x:Name="NumProductCount"  Grid.Column="1" Grid.Row="0" AllowTextInput="True" Minimum="0" Maximum="100000" ValueChanged="NumProductCount_ValueChanged" />
+                                <xctk:IntegerUpDown x:Name="NumVariationsPerProductCount"   Grid.Column="1" Grid.Row="1" AllowTextInput="True" Minimum="0" Maximum="100000" ValueChanged="NumVariationsPerProductCount_ValueChanged" />
+                                <xctk:IntegerUpDown x:Name="NumVariationCount"   Grid.Column="1" Grid.Row="2" AllowTextInput="True" Minimum="0" Maximum="100000" ValueChanged="NumVariationCount_ValueChanged" />
                             </Grid>
                             <ComboBox x:Name="CmbCatalogStructure" SelectionChanged="CmbCatalogStructure_SelectionChanged" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
 

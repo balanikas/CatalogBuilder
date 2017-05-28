@@ -11,6 +11,11 @@ namespace CatalogBuilder
 
         public static IEnumerable<XElement> CreateAssociations(BuildContext context)
         {
+            if (context.Entries.AssociationsPerEntryCount == 0)
+            {
+                return Enumerable.Empty<XElement>();
+            }
+
             var xCatalogAssociations = new List<XElement>();
 
             var entryCodes = context.Entries.EntryIds.ToArray();

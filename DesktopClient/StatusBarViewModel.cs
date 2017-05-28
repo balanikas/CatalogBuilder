@@ -13,6 +13,13 @@ namespace DesktopClient
         private int _nodesCount;
         private int _productsCount;
         private int _variationsCount;
+        private int _associationsCount;
+        private int _warehousesCount;
+        private int _packagesCount;
+        private int _merchantsCount;
+        private int _taxCategoriesCount;
+        private int _associationTypesCount;
+        private int _marketsCount;
 
         public int LinesOfCode
         {
@@ -54,12 +61,90 @@ namespace DesktopClient
             }
         }
 
+        public int AssociationsCount
+        {
+            get => _associationsCount;
+            set
+            {
+                _associationsCount = value;
+                RaisePropertyChanged("AssociationsCount");
+            }
+        }
+
+        public int WarehousesCount
+        {
+            get => _warehousesCount;
+            set
+            {
+                _warehousesCount = value;
+                RaisePropertyChanged("WarehousesCount");
+            }
+        }
+
+        public int MarketsCount
+        {
+            get => _marketsCount;
+            set
+            {
+                _marketsCount = value;
+                RaisePropertyChanged("MarketsCount");
+            }
+        }
+
+        public int MerchantsCount
+        {
+            get => _merchantsCount;
+            set
+            {
+                _merchantsCount = value;
+                RaisePropertyChanged("MerchantsCount");
+            }
+        }
+
+        public int AssociationTypesCount
+        {
+            get => _associationTypesCount;
+            set
+            {
+                _associationTypesCount = value;
+                RaisePropertyChanged("AssociationTypesCount");
+            }
+        }
+
+        public int PackagesCount
+        {
+            get => _packagesCount;
+            set
+            {
+                _packagesCount = value;
+                RaisePropertyChanged("PackagesCount");
+            }
+        }
+
+        public int TaxCategoriesCount
+        {
+            get => _taxCategoriesCount;
+            set
+            {
+                _taxCategoriesCount = value;
+                RaisePropertyChanged("TaxCategoriesCount");
+            }
+        }
+
         public void Clear()
         {
             LinesOfCode = -1;
             NodesCount = -1;
             ProductsCount = -1;
             VariationsCount = -1;
+            AssociationsCount = -1;
+            WarehousesCount = -1;
+            PackagesCount = -1;
+            MarketsCount = -1;
+            MerchantsCount = -1;
+            TaxCategoriesCount = -1;
+            AssociationTypesCount = -1;
+
         }
 
         public void Update(string filePath, int linesOfCode)
@@ -71,6 +156,13 @@ namespace DesktopClient
             NodesCount = doc.Root.Element("Catalog").Element("Nodes").Elements().Count(); 
             ProductsCount = entries.Count(x => x.Element("EntryType").Value.Equals("Product", StringComparison.InvariantCultureIgnoreCase));
             VariationsCount = entries.Count(x => x.Element("EntryType").Value.Equals("Variation", StringComparison.InvariantCultureIgnoreCase));
+            AssociationsCount = doc.Root.Element("Catalog").Element("Associations").Elements("CatalogAssociation").Count();
+            WarehousesCount = doc.Root.Element("Dictionaries").Element("Warehouses").Elements("Warehouse").Count();
+            PackagesCount = doc.Root.Element("Dictionaries").Element("Packages").Elements("Package").Count();
+            MarketsCount = doc.Root.Element("Dictionaries").Element("Markets").Elements("Market").Count();
+            MerchantsCount = doc.Root.Element("Dictionaries").Element("Merchants").Elements("Merchant").Count();
+            TaxCategoriesCount = doc.Root.Element("Dictionaries").Element("TaxCategories").Elements("TaxCategory").Count();
+            AssociationTypesCount = doc.Root.Element("Dictionaries").Element("AssociationTypes").Elements("AssociationType").Count();
         }
 
         public void Update(TreeNode node, int linesOfCode)
@@ -79,6 +171,13 @@ namespace DesktopClient
             NodesCount = TreeUtils.CountNodes(node);
             ProductsCount = TreeUtils.CountProducts(node);
             VariationsCount = TreeUtils.CountVariations(node);
+            AssociationsCount = -1;
+            WarehousesCount = -1;
+            PackagesCount = -1;
+            MarketsCount = -1;
+            MerchantsCount = -1;
+            TaxCategoriesCount = -1;
+            AssociationTypesCount = -1;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
